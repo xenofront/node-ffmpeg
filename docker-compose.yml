@@ -1,14 +1,14 @@
 version: "3.8"
 
 services:
-  ffmpeg:
+  app:
     build:
       context: .
       dockerfile: Dockerfile
-    restart: always
-    command: npm run dev
-    working_dir: /var/www
+      target: base
+    container_name: ffmpeg
     ports:
       - "3355:3355"
     volumes:
       - ./src:/var/www/src:ro
+    command: npm run dev
