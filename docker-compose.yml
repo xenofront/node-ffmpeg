@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  ffmpeg:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    command: npm run dev
+    working_dir: /var/www
+    ports:
+      - "3355:3355"
+    volumes:
+      - ./src:/var/www/src:ro
