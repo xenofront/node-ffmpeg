@@ -3,9 +3,13 @@ version: "3.8"
 services:
   app:
     build:
+      args:
+        - NODE_ENV=development
       context: .
       dockerfile: Dockerfile
       target: base
+    environment:
+      - NODE_ENV=development
     container_name: ffmpeg
     ports:
       - "3355:3355"
