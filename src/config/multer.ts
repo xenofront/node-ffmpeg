@@ -1,15 +1,25 @@
 import multer from "multer";
-import uuid from "uuid";
 
-global.upload = multer({
-  metadata: function (req, file, cb) {
-    cb(null, { fieldName: file.fieldname });
-  },
-  key: function (req, file, cb) {
-    let key = uuid.v4();
-    if (file.mimetype.indexOf("video") >= 0) {
-      key += ".mp4";
+export let upload;
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, global.uploadsPath);
+    },
+    filename: function (req: any, file: any, cb: any) {
+        cb(null, file.originalname);
     }
-    cb(null, key);
-  },
 });
+
+const fileFilter = (req: any, file: any, cb: any) => {
+    const validMimeTypes = /|audio.*/i;
+    const mime = file.mimetype.match(validMimeTypes);
+
+    if (mime) {
+        cb(null, true);
+    } else {
+        cb(new Error("Error: File not supported"), false);
+    }
+};
+
+upload = multer({storage: storage, fileFilter: fileFilter});

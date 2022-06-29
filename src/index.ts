@@ -5,7 +5,10 @@ import http from "http";
 import routes from "./routes";
 
 import "dotenv/config";
-import "./config/multer";
+import path from "path";
+
+global.ServerRoot = path.resolve(__dirname);
+global.uploadsPath = path.resolve(`${__dirname}/../uploads`)
 
 const app = express();
 
@@ -13,13 +16,13 @@ const server = http.createServer(app);
 
 app.use(cors());
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: "50mb"}));
+app.use(bodyParser.urlencoded({extended: true}));
 
 // app.use("/public", express.static("public"));
 
 app.use(routes);
 
 server.listen(process.env.PORT, () => {
-  console.log(`Server listening at http://localhost:${process.env.PORT}`);
+    console.log(`Server listening at http://localhost:${process.env.PORT}`);
 });

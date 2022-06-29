@@ -2,6 +2,7 @@ version: "3.8"
 
 services:
   app:
+    hostname: "app"
     build:
       args:
         - NODE_ENV=development
@@ -10,9 +11,9 @@ services:
       target: base
     environment:
       - NODE_ENV=development
-    container_name: ffmpeg
     ports:
       - "3355:3355"
     volumes:
-      - ./src:/var/www/src:ro
+      - ./src:/var/www/src
+      - ./uploads:/var/www/uploads
     command: npm run dev
