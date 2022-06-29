@@ -10,41 +10,36 @@ route.post("/convertToMp3", (req: any, res: Response) => {
 
     const files = req.body?.files as { value: any, name: string }[];
 
+    fs.existsSync(global.sandboxPath) || fs.mkdirSync(global.sandboxPath);
+    fs.existsSync(`${global.sandboxPath}/uploads`) || fs.mkdirSync(`${global.sandboxPath}/uploads`);
+    fs.existsSync(`${global.sandboxPath}/converted`) || fs.mkdirSync(`${global.sandboxPath}/converted`);
+
     try {
         const convertedFiles: { value: any, name: string }[] = [];
 
         new Promise(async resolve => {
 
             for (const file of files) {
-                const sandboxPath = `${global.sandboxPath}/${file.name}`;
-                const newConvertedFile = sandboxPath;
+                const sandboxUploadsPath = `${global.sandboxPath}/uploads/${file.name}`;
+                const newConvertedFile = `${global.sandboxPath}/converted/${file.name}`;
 
                 const fileBuffer = Buffer.from(file.value, "base64");
 
-                fs.writeFileSync(sandboxPath, fileBuffer);
+                fs.writeFileSync(sandboxUploadsPath, fileBuffer);
 
-                await convertFile(sandboxPath, newConvertedFile);
+                await convertFile(sandboxUploadsPath, newConvertedFile);
 
                 const buffer = fs.readFileSync(newConvertedFile);
 
                 convertedFiles.push({value: buffer.toString("base64"), name: file.name});
+                fs.unlinkSync(sandboxUploadsPath);
+                fs.unlinkSync(newConvertedFile);
             }
 
             resolve(convertedFiles);
         }).then(newFiles => {
             res.json({success: true, files: newFiles});
             res.end();
-
-            fs.readdir(global.sandboxPath, (err, files) => {
-                if (err) throw err;
-
-                for (const file of files) {
-                    fs.unlink(path.join(global.sandboxPath, file), err => {
-                        if (err) throw err;
-                    });
-                }
-            });
-
         });
     } catch (err) {
         res.json({success: false, message: err});
