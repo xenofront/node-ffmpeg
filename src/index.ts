@@ -8,7 +8,7 @@ import "dotenv/config";
 import path from "path";
 
 global.ServerRoot = path.resolve(__dirname);
-global.uploadsPath = path.resolve(`${__dirname}/../uploads`)
+global.sandboxPath = path.resolve(`${__dirname}/../sandbox`);
 
 const app = express();
 

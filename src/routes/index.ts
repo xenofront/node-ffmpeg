@@ -1,6 +1,7 @@
 import {Request, Response, Router} from "express";
 import Ffmpeg from "fluent-ffmpeg";
 import * as fs from "fs";
+import path from "path";
 
 
 const route = Router();
@@ -11,17 +12,18 @@ route.post("/convertToMp3", (req: any, res: Response) => {
 
     try {
         const convertedFiles: { value: any, name: string }[] = [];
+
         new Promise(async resolve => {
 
             for (const file of files) {
-                const uploadPath = `${global.uploadsPath}/${file.name}`;
-                const newConvertedFile = uploadPath;
+                const sandboxPath = `${global.sandboxPath}/${file.name}`;
+                const newConvertedFile = sandboxPath;
 
                 const fileBuffer = Buffer.from(file.value, "base64");
 
-                fs.writeFileSync(uploadPath, fileBuffer);
+                fs.writeFileSync(sandboxPath, fileBuffer);
 
-                await convertFile(uploadPath, newConvertedFile);
+                await convertFile(sandboxPath, newConvertedFile);
 
                 const buffer = fs.readFileSync(newConvertedFile);
 
@@ -32,6 +34,17 @@ route.post("/convertToMp3", (req: any, res: Response) => {
         }).then(newFiles => {
             res.json({success: true, files: newFiles});
             res.end();
+
+            fs.readdir(global.sandboxPath, (err, files) => {
+                if (err) throw err;
+
+                for (const file of files) {
+                    fs.unlink(path.join(global.sandboxPath, file), err => {
+                        if (err) throw err;
+                    });
+                }
+            });
+
         });
     } catch (err) {
         res.json({success: false, message: err});

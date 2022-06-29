@@ -4,7 +4,7 @@ export let upload;
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, global.uploadsPath);
+        cb(null, global.sandboxPath);
     },
     filename: function (req: any, file: any, cb: any) {
         cb(null, file.originalname);

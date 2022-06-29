@@ -15,5 +15,5 @@ services:
       - "3355:3355"
     volumes:
       - ./src:/var/www/src
-      - ./uploads:/var/www/uploads
+      - ./sandbox:/var/www/sandbox
     command: npm run dev
