@@ -8,4 +8,4 @@ services:
       target: production
     environment:
       - NODE_ENV=production
-    command: node build/index.js
+    command: npm start
