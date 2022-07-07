@@ -1,1 +1,1 @@
-export * as HomeController from "./HomeController";
+// export * as HomeController from "./HomeController";

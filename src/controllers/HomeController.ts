@@ -1,10 +1,10 @@
-import { Request, Response } from "express";
+// import { Request, Response } from "express";
 
-export const welcome = (req: Request, res: Response) => {
-  res.json({
-    success: true,
-  });
-};
+// export const welcome = (req: Request, res: Response) => {
+//   res.json({
+//     success: true,
+//   });
+// };
 
 // const upload = (req, res) => {
 //   res.json({
@@ -14,9 +14,9 @@ export const welcome = (req: Request, res: Response) => {
 //   });
 // };
 
-export const notFound = (req: Request, res: Response) => {
-  res.json({
-    success: false,
-    message: `Page: ${req.url} not found`,
-  });
-};
+// export const notFound = (req: Request, res: Response) => {
+//   res.json({
+//     success: false,
+//     message: `Page: ${req.url} not found`,
+//   });
+// };

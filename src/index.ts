@@ -5,7 +5,7 @@ import http from "http";
 import routes from "./routes";
 
 import "dotenv/config";
-import "./config/multer";
+// import "./config/multer";
 
 const app = express();
 
