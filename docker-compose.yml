@@ -1,15 +1,15 @@
-# version: "3.8"
+version: "3.8"
 
-# services:
-#   ffmpeg_service:
-#     build:
-#       context: .
-#       dockerfile: Dockerfile
-#     environment:
-#       - NODE_ENV=development
-#     ports:
-#       - "3355:3355"
-#     volumes:
-#       - ./src:/var/www/src
-#       - ./sandbox:/var/www/sandbox
-#     command: npm run dev
+services:
+  ffmpeg_service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=development
+    ports:
+      - "3355:3355"
+    volumes:
+      - ./src:/var/www/src
+      - ./sandbox:/var/www/sandbox
+    command: npm run dev

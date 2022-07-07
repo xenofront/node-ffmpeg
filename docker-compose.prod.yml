@@ -1,11 +1,11 @@
-version: "3.8"
+# version: "3.8"
 
-services:
-  app:
-    build:
-      args:
-        - NODE_ENV=production
-      target: production
-    environment:
-      - NODE_ENV=production
-    command: npm start
+# services:
+#   app:
+#     build:
+#       args:
+#         - NODE_ENV=production
+#       target: production
+#     environment:
+#       - NODE_ENV=production
+#     command: npm start
